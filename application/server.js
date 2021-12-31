@@ -1,11 +1,7 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const app = express()
 
-// CONFIGURANDO APP
-require('./config')(app, express);
+require('./config')(app, express) // Configurando app
+require('./rota')(app) // Chamando rotas
 
-// INICIANDO ROTA
-require('./rota')(app);
-
-// EXPORTANDO APP
-module.exports = app;
+module.exports = app // EXPORTANDO APP
