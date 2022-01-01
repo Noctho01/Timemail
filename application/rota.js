@@ -1,5 +1,7 @@
 const controll = require('./controll')
 
 module.exports = app => {
-    app.route('/init').post(controll.init)
+    app.route('/email')
+        .post(controll.start)
+        .put(controll.stop)
 }
