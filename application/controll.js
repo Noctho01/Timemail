@@ -1,31 +1,70 @@
-const Email = require('./email')
-const validationBody = require('./validation.js')
+import enviarEmail from './email.js'
+import validationBody from './validation.js'
 
-module.exports = {
-    start: (req, res, next) => {
-        res.set('Content-Type', 'application/json')
+export default {
+    info: (req, res, next) => {
+        try {
+            const info = {
+                "remetente" : "remetenteEmail@mail.com",
+                "service" : "gmail por exemplo",
+                "psw" : "suaSenha123",
+                "psw_confirmation" : "suaSenha123",
+                "assunto" : "foo",
+                "texto" : "bar",
+                "destinatarios" : [
+                    {
+                        "endereco" : "destinatarioEmail@mailcom",
+                        "date" : "* * * * * *" // * por default é o valor atual do seu relogio/calendario
+                    }
+                ]
+            }
 
-        const body = req.body
-        const responseValidation = validationBody(body)
+            res.status(200)
+                .set('Content-Type', 'application/json')
+                .json({
+                    "exemplo formulario json para POST /agendar_email": info,
+                    "sobre date" : {
+                        detalhe: "em date cada * representa um registro segundos, minutos, horas, dia, mes, dia_da_semna(ex: sunday) nessa respectiva ordem",
+                        exemplo: " 'date' : '0 30 12 5 1 monday' "
+                    }
+                })
 
-        if(responseValidation.error) res.status(400).json({
-            error: "O servidor não entendeu a requisição pois está com uma sintaxe inválida",
-            detalhe: responseValidation.error
-        })
-        
-        const email = new Email(body)
-
-        res.status(201)
-            .json({
-                message: "Email enviado com sucesso!"
-            })
+        } catch (err) {
+            res.status(500)
+                .set('Content-Type', 'application/json')
+                .json({
+                    error: "Erro na rota GET /agendar_email",
+                    detalhe: err
+                })
+        }
     },
 
-    stop: (req, res, next) => {
-        res.set('Content-Type', 'application/json')
+    start: (req, res, next) => {
+        try {
+            res.set('Content-Type', 'application/json')
 
-        res.status(201).json({
-            message: "Envio cancelado"
-        })
-    }
-};
+            const body = req.body
+            const responseValidation = validationBody(body)
+
+            if (responseValidation.error) res.status(400).json({
+                error: "O servidor não entendeu a requisição pois está com uma sintaxe inválida",
+                detalhe: responseValidation.error
+            })
+            
+            const resultSent = enviarEmail(body)
+            if(resultSent.error) res.status(402).json({
+                error: "Erro ao agendar o envio de email",
+                detalhe: resultSent.error
+            })
+
+            res.status(201).json({ message: "Email enviado com sucesso!" })
+            
+        } catch (err) {
+            res.status(500).set('Content-Type', 'application/json').json({
+                error: "Erro na rota POST /agendar_email",
+                detalhes: err
+            })
+            next(err)
+        }
+    } 
+}

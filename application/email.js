@@ -1,20 +1,16 @@
-const cron = require('node-cron')
-const nodemailer = require('nodemailer')
+import cron from 'node-cron'
+import nodemailer from 'nodemailer'
 
-class Email {
-    constructor (body) {
-        this.task = Email.agendar(body)
-    }
+export default body => {
+    const transport = nodemailer.createTransport({
+        service: body.service,
+        auth: {
+            user: body.remetente,
+            pass: body.psw
+        }
+    })
 
-    static agendar (body) {
-        const transport = nodemailer.createTransport({
-            service: body.service,
-            auth: {
-                user: body.remetente,
-                pass: body.psw
-            }
-        })
-
+    try {    
         body.destinatarios.forEach( destinatario => {
             const endereco = destinatario.endereco
             const time = destinatario.date
@@ -23,7 +19,7 @@ class Email {
                 from : body.remetente,
                 to : endereco,
                 subject : body.assunto,
-                text : body.text
+                text : body.texto
             }
 
             cron.schedule(time, () => {
@@ -34,7 +30,10 @@ class Email {
                 })
             })
         })
+
+        return true
+
+    } catch (err) {
+        return { error: err }
     }
 }
-
-module.exports = Email

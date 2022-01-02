@@ -1,6 +1,6 @@
-const cookieParser = require('cookie-parser');
+import cookieParser from "cookie-parser";
 
-module.exports = (app, express) => {
+export default (app, express) => {
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
     app.use(cookieParser());

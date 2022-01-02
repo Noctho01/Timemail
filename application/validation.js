@@ -1,7 +1,6 @@
-const { type } = require('express/lib/response')
-const Validator = require('validatorjs')
+import Validator from 'validatorjs'
 
-function validationBody (body) {
+export default body => {
     const validator = new Validator(body, {
         'remetente' : 'required|email',
         'service' : 'required',
@@ -14,9 +13,8 @@ function validationBody (body) {
     })
 
     validator.passes()
+    
     if(Object.keys(validator.errors.all()).length !== 0) return { error: validator.errors.all() }
 
     return true
 }
-
-module.exports = validationBody

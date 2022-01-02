@@ -1,7 +1,10 @@
-const express = require('express')
+import express from 'express'
+import rotas from './rota.js'
+import config from './config.js'
+
 const app = express()
 
-require('./config')(app, express) // Configurando app
-require('./rota')(app) // Chamando rotas
+config(app, express)
+rotas(app)
 
-module.exports = app // EXPORTANDO APP
+export default app

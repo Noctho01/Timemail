@@ -1,7 +1,7 @@
-const controll = require('./controll')
+import controll from './controll.js'
 
-module.exports = app => {
-    app.route('/email')
+export default app => {
+    app.route('/agendar_email')
+        .get(controll.info)
         .post(controll.start)
-        .put(controll.stop)
 }
