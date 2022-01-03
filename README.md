@@ -34,8 +34,33 @@ GET /agendar_email
    ]
 }
 ~~~~
+### "remetente" [String]
+endereco de email que será responsavel pelo envio da mensagem;
 
-#
+### "service" [String]
+servico de email a qual o endereço em <remetente> se refere;
+
+### "psw" & "psw_confirmation" [String]
+senha acesso ao seu email e a confirmacão;
+
+### "assunto" [String]
+assunto da mensagem de email
+
+### "texto" [String]
+texto com a mensagem que sera enviada ao(s) destinatario(s)
+
+### "destinatarios" [Array]
+Lista de objetos referentes aos destinatarios da mensagem
+  ### "endereco"
+  endereço de email do destinatario
+  
+  ### "date"
+  marca o time de envio do email
+  em date cada * representa um registro segundos, minutos, horas, dia, mes, dia_da_semna(ex: sunday) nessa respectiva ordem
+  Exemplo:
+  ~~~~json
+  "date" : "0 30 12 5 1 monday"
+  ~~~~
 
 ~~~
 POST /agendar_email
