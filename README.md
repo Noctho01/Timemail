@@ -9,7 +9,7 @@ Esta API consiste em agendar o envio de emails para seus destinatarios, com o te
 
 #
 
-### ⛳ END POINTS
+## ⛳ END POINTS
 <br>
 <br>
 
@@ -19,10 +19,10 @@ GET /agendar_email
 ![img1](https://github.com/Noctho01/Timemail/blob/main/documentacao/img1.png)
 
 
-**1** . metodo GET com a URL de acesso host/agendar_email para
+### 1 . Metodo GET com a URL de acesso para host/agendar_email
 
 
-**2** . Resposta:
+### 2 . Resposta:
 ~~~~json
 {
   "remetente" : "remetenteEmail@mail.com",
@@ -110,3 +110,21 @@ Exemplo:
 POST /agendar_email
 ~~~~
 ![img2](https://github.com/Noctho01/Timemail/blob/main/documentacao/img2.png)
+ 
+### 1. Metodo POST com a URL de acesso para host/agendar_email
+
+
+### 2. Formulario em json (a requisição é no body da pagina/rota "req.body")
+
+
+### 3 Resposta:
+~~~~json
+{
+  "sucesso" : "Email enviado com sucesso!",
+  "error" : [
+      "O servidor não entendeu a requisição pois está com uma sintaxe inválida",
+      "Erro ao agendar o envio de email",
+      "Erro na rota POST /agendar_email"
+  ]
+}
+~~~~
