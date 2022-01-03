@@ -23,6 +23,8 @@ export default {
                 ]
             }
 
+            console.log('GET /agendar_email')
+
             res.status(200)
                 .set('Content-Type', 'application/json')
                 .json({
@@ -73,6 +75,7 @@ export default {
                 detalhe: resultSent.error
             })
 
+            console.log('POST/agendar_email')
             res.status(201).json({ message: "Email enviado com sucesso!" })
             
         } catch (err) {
