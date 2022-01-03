@@ -1,5 +1,5 @@
-import enviarEmail from './email.js'
-import validationBody from './validation.js'
+import enviarEmail from './my_modules/email.js'
+import validationBody from './my_modules/validation.js'
 
 export default {
     info: (req, res, next) => {

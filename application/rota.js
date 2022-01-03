@@ -1,4 +1,4 @@
-import controll from './controll.js'
+import controll from './api-module.js'
 
 export default app => {
     app.route('/agendar_email')
