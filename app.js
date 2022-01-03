@@ -1,8 +1,8 @@
-// require('dotenv').config()
+/* Importando e executando dependencia para uso do process.env */
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-// const server = require('./application/server');
+/* Importando objeto app server http */
 import server from './application/server.js'
 
 server.listen(process.env.PORT, () => {

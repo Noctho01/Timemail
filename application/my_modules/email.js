@@ -1,7 +1,9 @@
-import cron from 'node-cron'
-import nodemailer from 'nodemailer'
+/* dependencias para funcionalidade deste modulo */
+import cron from 'node-cron'        // agendamento de eventos
+import nodemailer from 'nodemailer' // envio de email
 
 export default body => {
+    /* Dados do remetente */
     const transport = nodemailer.createTransport({
         service: body.service,
         auth: {
@@ -10,7 +12,8 @@ export default body => {
         }
     })
 
-    try {    
+    try {
+        /* Inicia uma varredura pela lista *.destinatarios e usando seus itens como base de informacao para envio do email*/    
         body.destinatarios.forEach( destinatario => {
             const endereco = destinatario.endereco
             const time = destinatario.date
@@ -22,8 +25,10 @@ export default body => {
                 text : body.texto
             }
 
+            /* Agendando evento de envio do email */
             cron.schedule(time, () => {
                 console.log('enviando email')
+                
                 transport.sendMail(mailOptions, (error, info) => {
                     if (error) { console.log(error) }
                     else { console.log(`Email sent ${info.response}`) }

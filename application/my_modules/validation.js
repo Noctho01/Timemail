@@ -1,4 +1,4 @@
-import Validator from 'validatorjs'
+import Validator from 'validatorjs'     // dependencia para validacao de dados
 
 export default body => {
     const validator = new Validator(body, {
@@ -12,7 +12,7 @@ export default body => {
         'destinatarios.*.date' : 'required'
     })
 
-    validator.passes()
+    validator.passes()  // validando dados
     
     if(Object.keys(validator.errors.all()).length !== 0) return { error: validator.errors.all() }
 

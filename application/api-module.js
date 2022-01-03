@@ -2,6 +2,10 @@ import enviarEmail from './my_modules/email.js'
 import validationBody from './my_modules/validation.js'
 
 export default {
+    /*
+        dados necessarios para processar a resposta: None
+        resposta: modelo de formulario json para envio na rota POST /agendar_email
+    */
     info: (req, res, next) => {
         try {
             const info = {
@@ -39,6 +43,17 @@ export default {
         }
     },
 
+    /*
+        dados necessarios para processar a resposta: preencher formulario json (para obter o modelo GET /agendar_email)
+        resposta: {
+            sucesso: "Email enviado com sucesso!",
+            error: [
+                "O servidor não entendeu a requisição pois está com uma sintaxe inválida",
+                "Erro ao agendar o envio de email",
+                "Erro na rota POST /agendar_email"
+            ]
+        }
+    */
     start: (req, res, next) => {
         try {
             res.set('Content-Type', 'application/json')
@@ -51,7 +66,8 @@ export default {
                 detalhe: responseValidation.error
             })
             
-            const resultSent = enviarEmail(body)
+            const resultSent = enviarEmail(body) // Inicia tentativa de agendar o envio do armazenado em body
+
             if(resultSent.error) res.status(402).json({
                 error: "Erro ao agendar o envio de email",
                 detalhe: resultSent.error
